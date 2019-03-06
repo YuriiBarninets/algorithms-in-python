@@ -4,3 +4,4 @@ This repository contains the following algorithms/data structures:
 * Selection sort
 * Insertion sort
 * Bubble sort
+* Quick sort
