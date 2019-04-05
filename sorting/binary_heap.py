@@ -1,5 +1,7 @@
-import random
-from time import time
+import sys
+sys.path.append("../utils")
+import data_provider
+
 
 '''
 Binary heap data structure
@@ -109,18 +111,8 @@ def heap_sort(array):
         array.append(heap.extract_top())
 
 
-def generate_random_array(start, end, size):
-    """Generate random array of numbers"""
-    array = []
-
-    for i in range(0, size):
-        array.append(random.randint(start, end))
-
-    return array
-
-
 if __name__ == "__main__":
-    rand_array = generate_random_array(0, 150, 15)
+    rand_array = data_provider.generate_random_array(0, 150, 15)
     for value in rand_array:
         print(value, end=" ")
 

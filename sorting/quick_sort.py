@@ -1,4 +1,7 @@
-import random
+import sys
+sys.path.append("../utils")
+import data_provider
+
 """
 O(N) : N * log N
 Worst case : N^2
@@ -36,35 +39,26 @@ def partition(array, start, end):
     return right_marker
 
 
-def quickSortRecursiveHelper(array, start, end):
+def quick_sort_recursive_helper(array, start, end):
     if start < end:
         split_point = partition(array, start, end)
 
-        quickSortRecursiveHelper(array, start, split_point - 1)
-        quickSortRecursiveHelper(array, split_point + 1, end)
+        quick_sort_recursive_helper(array, start, split_point - 1)
+        quick_sort_recursive_helper(array, split_point + 1, end)
 
 
-def quickSort(array):
-    quickSortRecursiveHelper(array, 0, len(array) - 1)
-
-
-def generateRandomArray(start, end, size):
-    """Generate random array of numbers"""
-    listArray = []
-
-    for i in range(0, size):
-        listArray.append(random.randint(start, end))
-
-    return listArray
+def quick_sort(array):
+    quick_sort_recursive_helper(array, 0, len(array) - 1)
 
 
 if __name__ == "__main__":
-    randArray = generateRandomArray(0, 150, 7)
-    for value in randArray:
+    rand_array = data_provider.generate_random_array(0, 150, 7)
+
+    print("\nInput data : ")
+    for value in rand_array:
         print(value, end=" ")
 
-    print("\n Quick sort : ")
-    quickSort(randArray)
-
-    for value in randArray:
+    print("\nQuick sort : ")
+    quick_sort(rand_array)
+    for value in rand_array:
         print(value, end=" ")

@@ -1,7 +1,9 @@
-import random
+import sys
+sys.path.append("../utils")
+import data_provider
 
 
-def selectionSort(array):
+def selection_sort(array):
     """
     O(N) : N^2
     Pos :
@@ -11,13 +13,13 @@ def selectionSort(array):
     Cons :
         * Make dummy operations if pass a sorted array on input
     """
-    N = len(array)
+    size = len(array)
 
-    for i in range(0, N - 1):
+    for i in range(0, size - 1):
         min_index = i
 
         # looking for the minimum value in unsorted part of array
-        for j in range(i + 1, N):
+        for j in range(i + 1, size):
             if array[min_index] > array[j]:
                 min_index = j
 
@@ -29,7 +31,7 @@ def selectionSort(array):
     return array
 
 
-def insertionSort(array):
+def insertion_sort(array):
     """
     O(N) : N^2
 
@@ -39,18 +41,18 @@ def insertionSort(array):
     Cons :
         * More counts of write operations than in Selection sort algorithm
     """
-    N = len(array)
-    for i in range(1, N):
-        indexToInsert = i
+    size = len(array)
+    for i in range(1, size):
+        index_to_insert = i
 
-        while indexToInsert > 0 and array[indexToInsert - 1] > array[indexToInsert]:
-            array[indexToInsert - 1], array[indexToInsert] = array[indexToInsert], array[indexToInsert - 1]
-            indexToInsert -= 1
+        while index_to_insert > 0 and array[index_to_insert - 1] > array[index_to_insert]:
+            array[index_to_insert - 1], array[index_to_insert] = array[index_to_insert], array[index_to_insert - 1]
+            index_to_insert -= 1
 
     return array
 
 
-def bubbleSort(array):
+def bubble_sort(array):
     """
     O(N) : N^2
 
@@ -60,49 +62,35 @@ def bubbleSort(array):
     Cons :
         * More counts of write operations than in Selection sort algorithm
     """
-    N = len(array)
-    isSorted = False
+    size = len(array)
+    is_sorted = False
 
-    while not isSorted:
-        isSorted = True
-        indexSortedPart = 1
+    while not is_sorted:
+        is_sorted = True
+        index_sorted_part = 1
 
-        for i in range(indexSortedPart, N):
+        for i in range(index_sorted_part, size):
             if array[i] < array[i - 1]:
                 array[i], array[i - 1] = array[i - 1], array[i]
-                isSorted = False
+                is_sorted = False
 
-        indexSortedPart += 1
+        index_sorted_part += 1
 
     return array
 
 
-def generateRandomArray(start, end, size):
-    """Generate random array of numbers"""
-    listArray = []
-    
-    for i in range(0, size):
-        listArray.append(random.randint(start, end))
-        
-    return listArray
-
-
-def sortingTest():
+if __name__ == "__main__":
     print("Selection sort : ")
-    ordered_array = selectionSort(generateRandomArray(0, 150, 25))
+    ordered_array = selection_sort(data_provider.generate_random_array(0, 150, 25))
     for value in ordered_array:
         print(value, end=" ")
 
     print("\nInsertion sort : ")
-    ordered_array = insertionSort(generateRandomArray(0, 150, 25))
+    ordered_array = insertion_sort(data_provider.generate_random_array(0, 150, 25))
     for value in ordered_array:
         print(value, end=" ")
 
     print("\nBubble sort : ")
-    ordered_array = bubbleSort(generateRandomArray(0, 150, 25))
+    ordered_array = bubble_sort(data_provider.generate_random_array(0, 150, 25))
     for value in ordered_array:
         print(value, end=" ")
-
-
-if __name__ == "__main__":
-    sortingTest()

@@ -51,19 +51,19 @@ class BinaryNode:
             return self.left
 
         # third case : if there are 2 children then find the maximum child on the left side
-        maxChild = self.left
-        grandChild = maxChild.right
+        max_child = self.left
+        grand_child = max_child.right
 
-        if grandChild:
-            while grandChild:
-                maxChild = grandChild
-                grandChild = maxChild.right
+        if grand_child:
+            while grand_child:
+                max_child = grand_child
+                grand_child = max_child.right
 
-            self.value = maxChild.value
-            maxChild.right = grandChild.left
+            self.value = max_child.value
+            maxChild.right = grand_child.left
         else:
-            self.value = maxChild.value
-            self.left = maxChild.left
+            self.value = max_child.value
+            self.left = max_child.left
 
         return None
 
@@ -97,9 +97,9 @@ class BinaryTree:
     def remove(self, value):
         """Remove value from tree"""
         if self.root:
-            self.root = self.removeFromNode(self.root, value)
+            self.root = self.remove_from_node(self.root, value)
 
-    def removeFromNode(self, parent, value):
+    def remove_from_node(self, parent, value):
         """Implement recursive remove algorithm"""
         if parent is None:
             return None
@@ -107,26 +107,26 @@ class BinaryTree:
         if parent.value == value:
             return parent.delete()
         elif parent.value > value:
-            parent.left = self.removeFromNode(parent.left, value)
+            parent.left = self.remove_from_node(parent.left, value)
         else:
-            parent.right = self.removeFromNode(parent.right, value)
+            parent.right = self.remove_from_node(parent.right, value)
 
         return parent
 
 
-def performanceTest():
+def performance_test():
     """Check execution performance"""
     print("======== Performance test ========")
     n = 256
     while n <= 75000:
-        binaryTree = BinaryTree()
+        binary_tree = BinaryTree()
         target = random.randint(0, n)
 
         for i in range(n):
-            binaryTree.add(random.randint(0, n))
+            binary_tree.add(random.randint(0, n))
 
         begin = time()
-        contains = binaryTree.contains(target)
+        contains = binary_tree.contains(target)
         end = time()
 
         execution_time = (end - begin) * 10000
@@ -134,24 +134,23 @@ def performanceTest():
         n *= 2
 
 
-def removeAddContainsTest():
+def remove_add_contains_test():
     print("======== Remove/Add/Contains test ========")
-    binaryTree = BinaryTree()
+    binary_tree = BinaryTree()
 
-    binaryTree.add(12)
-    binaryTree.add(7)
-    binaryTree.add(66)
-    binaryTree.add(2)
-    binaryTree.add(5)
+    binary_tree.add(12)
+    binary_tree.add(7)
+    binary_tree.add(66)
+    binary_tree.add(2)
+    binary_tree.add(5)
 
-    print(binaryTree.contains(7))
-
-    binaryTree.remove(7)
-    print(binaryTree.contains(7))
+    print(binary_tree.contains(7))
+    binary_tree.remove(7)
+    print(binary_tree.contains(7))
 
 
 if __name__ == "__main__":
-    performanceTest()
-    removeAddContainsTest()
+    performance_test()
+    remove_add_contains_test()
 
 

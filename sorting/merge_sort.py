@@ -1,4 +1,7 @@
-import random
+import sys
+sys.path.append("../utils")
+import data_provider
+
 
 """
 O(N) : N * log N
@@ -10,6 +13,7 @@ Pos :
 Cons :
  * Use additional memory for merge two sub arrays
 """
+
 
 # Merges two subarrays of arr[]
 # First subarray arr[left..middle]
@@ -57,33 +61,23 @@ def merge(arr, left, middle, right):
         k += 1
 
 
-def mergeSort(arr, left, right):
+def merge_sort(arr, left, right):
     if left < right:
         middle = (left + right) // 2
 
         # sort first and second halves
-        mergeSort(arr, left, middle)
-        mergeSort(arr, middle + 1, right)
+        merge_sort(arr, left, middle)
+        merge_sort(arr, middle + 1, right)
         merge(arr, left, middle, right)
 
 
-def generateRandomArray(start, end, size):
-    """Generate random array of numbers"""
-    listArray = []
-
-    for i in range(0, size):
-        listArray.append(random.randint(start, end))
-
-    return listArray
-
-
 if __name__ == "__main__":
-    randArray = generateRandomArray(0, 150, 7)
-    for value in randArray:
+    rand_array = data_provider.generate_random_array(0, 150, 15)
+    for value in rand_array:
         print(value, end=" ")
 
-    print("\n Merge sort : ")
-    mergeSort(randArray, 0, len(randArray) - 1)
+    print("\nMerge sort : ")
+    merge_sort(rand_array, 0, len(rand_array) - 1)
 
-    for value in randArray:
+    for value in rand_array:
         print(value, end=" ")
