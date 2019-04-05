@@ -6,6 +6,7 @@ Sorting :
 * Bubble sort
 * Quick sort
 * Merge sort
+* Heap sorting (Binary heap)
 
 Search :
 * Binary array search
