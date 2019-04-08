@@ -11,3 +11,7 @@ Sorting :
 Search :
 * Binary array search
 * Binary search tree
+
+Graph :
+* Breadth-First Search (BFS)
+* Depth-First Search (DFS)
