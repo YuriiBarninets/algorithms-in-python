@@ -6,7 +6,8 @@ Sorting :
 * Bubble sort
 * Quick sort
 * Merge sort
-* Heap sorting (Binary heap)
+* Binary heap
+  * Heap sorting
 
 Search :
 * Binary array search
@@ -14,5 +15,5 @@ Search :
 
 Graph :
 * Breadth-First Search (BFS)
- - Algorithm that search the shortest path in unweighted graph
+  * Algorithm that search the shortest path in unweighted graph
 * Depth-First Search (DFS)
