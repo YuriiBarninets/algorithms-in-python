@@ -14,4 +14,5 @@ Search :
 
 Graph :
 * Breadth-First Search (BFS)
+ - Algorithm that search the shortest path in unweighted graph
 * Depth-First Search (DFS)
