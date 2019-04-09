@@ -3,11 +3,21 @@ class Vertex:
         self.label = label
         self.outbound_edges = []
 
+    def __str__(self):
+        outbound_edges_str = ""
+        for edge in self.outbound_edges:
+            outbound_edges_str += str(edge) + ", "
+
+        return "Vertex : {0}, Outbound edges : {1}".format(self.label, outbound_edges_str)
+
 
 class Edge:
     def __init__(self, start_vertex, end_vertex):
         self.start_vertex = start_vertex
         self.end_vertex = end_vertex
+
+    def __str__(self):
+        return "{0} -> {1}".format(self.start_vertex.label, self.end_vertex.label)
 
 
 class Graph:
@@ -15,28 +25,10 @@ class Graph:
         self.vertices = vertices
         self.edges = edges
 
+    def __str__(self):
+        graph_str = ""
 
-if __name__ == "__main__":
-    # vertices
-    ivan = Vertex("Ivan")
-    stepan = Vertex("Stepan")
-    taras = Vertex("Taras")
+        for vertex in self.vertices:
+            graph_str += str(vertex) + '\n'
 
-    # edges ivan --> stepan, ivan --> taras
-    ivan.outbound_edges.append(Edge(ivan, stepan))
-    ivan.outbound_edges.append(Edge(ivan, taras))
-
-    # edge taras --> stepan
-    taras.outbound_edges.append(Edge(taras, stepan))
-
-    # edge stepan --> ivan
-    stepan.outbound_edges.append(Edge(stepan, ivan))
-
-    # graph
-    vertices = [ivan, stepan, taras]
-    edges = []
-
-    for vertex in vertices:
-        edges.extend(vertex.outbound_edges)
-
-    graph = Graph(vertices, edges)
+        return graph_str

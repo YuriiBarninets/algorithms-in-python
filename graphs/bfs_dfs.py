@@ -1,10 +1,14 @@
 from graph import *
 
-# BFS use queue to manage incoming vertices
-# DFS use stack to manage incoming vertices
-# breadth first search
+
 def bfs(graph, start_vertex):
-    # Initially, the queue(BFS)/stack(DFS) contains the start vertex
+    """"
+    BFS(Breadth-First Search) use queue to manage incoming vertices
+    DFS(Depth-First Search) use stack to manage incoming vertices
+    BFS can be used to find the shortest path in unweighted graph
+    DFS can be used to generate a maze
+    """
+    # Initially, the queue(BFS)/stack(DFS) contains only the start vertex
     queue = [start_vertex]
 
     # All vertices are not visited
@@ -15,14 +19,14 @@ def bfs(graph, start_vertex):
     result = []
     while len(queue) > 0:
         # 1. pop a vertex from the queue(BFS)/stack(DFS)
-        current_vertex = queue.pop(0) # Change on queue.pop() and you get DFS
+        current_vertex = queue.pop(0)  # Change on queue.pop() and you get DFS
 
         # 2. ignoring this vertex if it has been visited
         if visited_vertices[current_vertex.label]:
             continue
 
         # 3. mark as visited, so we will not visit it anymore, DO some operation on vertex if necessary
-        result.append(current_vertex.label)
+        result.append(current_vertex)
         visited_vertices[current_vertex.label] = True
 
         # 4. get all adjacent vertices which HAVE NOT been visited
@@ -71,13 +75,13 @@ if __name__ == "__main__":
 
     # graph
     vertices = [Jhon, Sophia, Emma, Alice, Jeff, Mark, George]
-    edges = []
+    all_edges = []
 
     for vertex in vertices:
-        edges.extend(vertex.outbound_edges)
+        all_edges.extend(vertex.outbound_edges)
 
-    graph = Graph(vertices, edges)
+    graph = Graph(vertices, all_edges)
 
-    labels = bfs(graph, Jhon)
-    for label in labels:
-        print(label)
+    vertices = bfs(graph, Jhon)
+    for vertex in vertices:
+        print(vertex)
