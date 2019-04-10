@@ -9,9 +9,8 @@ def bfs(graph, start_vertex):
     DFS can be used to generate a maze
     """
     # Initially, the queue(BFS)/stack(DFS) contains only the start vertex
+    # and all vertices are not visited
     queue = [start_vertex]
-
-    # All vertices are not visited
     visited_vertices = {}
     for vertex in graph.vertices:
         visited_vertices[vertex.label] = False

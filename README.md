@@ -17,3 +17,5 @@ Graph :
 * Breadth-First Search (BFS)
   * Algorithm that search the shortest path in unweighted graph
 * Depth-First Search (DFS)
+* Dijksta's algorithm
+  * Algorithm that search the shortest path in weighted graph(weights must be positive values)

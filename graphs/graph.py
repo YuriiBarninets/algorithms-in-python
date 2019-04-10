@@ -12,9 +12,10 @@ class Vertex:
 
 
 class Edge:
-    def __init__(self, start_vertex, end_vertex):
+    def __init__(self, start_vertex, end_vertex, weight=1):
         self.start_vertex = start_vertex
         self.end_vertex = end_vertex
+        self.weight = weight
 
     def __str__(self):
         return "{0} -> {1}".format(self.start_vertex.label, self.end_vertex.label)

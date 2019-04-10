@@ -12,9 +12,8 @@ def bfs_shortest_path(graph, start, goal):
         return start
 
     # initially, queue contains only the list with start vertex
+    # and all vertices are not visited
     queue = [[start]]
-
-    # initially, all vertices are not visited
     visited_vertices = {}
     for vertex in graph.vertices:
         visited_vertices[vertex.label] = False
