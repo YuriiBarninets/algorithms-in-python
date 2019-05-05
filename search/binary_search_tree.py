@@ -56,11 +56,12 @@ class BinaryNode:
 
         if grand_child:
             while grand_child:
+                parent = max_child
                 max_child = grand_child
                 grand_child = max_child.right
 
             self.value = max_child.value
-            maxChild.right = grand_child.left
+            parent.right = max_child.left
         else:
             self.value = max_child.value
             self.left = max_child.left
@@ -95,7 +96,7 @@ class BinaryTree:
         return False
 
     def remove(self, value):
-        """Remove value from tree"""
+        """Run recursive algorithm from ROOT node when removes value from the tree"""
         if self.root:
             self.root = self.remove_from_node(self.root, value)
 
