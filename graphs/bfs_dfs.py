@@ -8,12 +8,12 @@ def bfs(graph, start_vertex):
     BFS can be used to find the shortest path in unweighted graph
     DFS can be used to generate a maze
     """
-    # Initially, the queue(BFS)/stack(DFS) contains only the start vertex
+    # initially, the queue(BFS)/stack(DFS) contains only the start vertex
     # and all vertices are not visited
     queue = [start_vertex]
     visited_vertices = {}
-    for vertex in graph.vertices:
-        visited_vertices[vertex.label] = False
+    for vertex in graph.get_vertices():
+        visited_vertices[vertex] = False
 
     result = []
     while len(queue) > 0:
@@ -21,18 +21,18 @@ def bfs(graph, start_vertex):
         current_vertex = queue.pop(0)  # Change on queue.pop() and you get DFS
 
         # 2. ignoring this vertex if it has been visited
-        if visited_vertices[current_vertex.label]:
+        if visited_vertices[current_vertex.get_label()]:
             continue
 
         # 3. mark as visited, so we will not visit it anymore, DO some operation on vertex if necessary
         result.append(current_vertex)
-        visited_vertices[current_vertex.label] = True
+        visited_vertices[current_vertex.get_label()] = True
 
         # 4. get all adjacent vertices which HAVE NOT been visited
         adjacent_vertices = []
-        for edge in current_vertex.outbound_edges:
-            if visited_vertices[edge.end_vertex.label] is False:
-                adjacent_vertices.append(edge.end_vertex)
+        for edge in current_vertex.get_outbound_edges():
+            if visited_vertices[edge.get_end_vertex().get_label()] is False:
+                adjacent_vertices.append(edge.get_end_vertex())
 
         # if necessary we may do some manipulation with adjacent_vertices, e.g. sort them
 
@@ -43,44 +43,37 @@ def bfs(graph, start_vertex):
 
 
 if __name__ == "__main__":
+
     # vertices
-    Jhon = Vertex("Jhon")
-    Sophia = Vertex("Sophia")
-    Emma = Vertex("Emma")
-    Mark = Vertex("Mark")
-    Alice = Vertex("Alice")
-    Jeff = Vertex("Jeff")
-    George = Vertex("George")
+    graph = Graph()
+    graph.add_vertex("Jhon")
+    graph.add_vertex("Sophia")
+    graph.add_vertex("Emma")
+    graph.add_vertex("Mark")
+    graph.add_vertex("Alice")
+    graph.add_vertex("Jeff")
+    graph.add_vertex("George")
 
     # edge Jhon --> Sophia
     # edge Jhon --> Emma
     # edge Jhon --> Mark
-    Jhon.outbound_edges.append(Edge(Jhon, Sophia))
-    Jhon.outbound_edges.append(Edge(Jhon, Emma))
-    Jhon.outbound_edges.append(Edge(Jhon, Mark))
+    graph.add_edge("Jhon", "Sophia")
+    graph.add_edge("Jhon", "Emma")
+    graph.add_edge("Jhon", "Mark")
 
     # edge Sophia --> Emma
     # edge Sophia --> Alice
-    Sophia.outbound_edges.append(Edge(Sophia, Emma))
-    Sophia.outbound_edges.append(Edge(Sophia, Alice))
+    graph.add_edge("Sophia", "Emma")
+    graph.add_edge("Sophia", "Alice")
 
     # edge Emma --> Sophia
     # edge Emma --> Jeff
-    Emma.outbound_edges.append(Edge(Emma, Sophia))
-    Emma.outbound_edges.append(Edge(Emma, Jeff))
+    graph.add_edge("Emma", "Sophia")
+    graph.add_edge("Emma", "Jeff")
 
     # edge Jeff --> George
-    Jeff.outbound_edges.append(Edge(Jeff, George))
+    graph.add_edge("Jeff", "George")
 
-    # graph
-    vertices = [Jhon, Sophia, Emma, Alice, Jeff, Mark, George]
-    all_edges = []
-
-    for vertex in vertices:
-        all_edges.extend(vertex.outbound_edges)
-
-    graph = Graph(vertices, all_edges)
-
-    vertices = bfs(graph, Jhon)
+    vertices = bfs(graph, graph.get_vertex("Jhon"))
     for vertex in vertices:
         print(vertex)
