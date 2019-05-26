@@ -19,8 +19,8 @@ Graph :
   * Depth-First Search (DFS)
   
 * Shortest-path algorithms :
- * Breadth-First Search (BFS) (unweighted graph)
- * Dijksta's algorithm (weighted graph, weights must be positive values)
+  * Breadth-First Search (BFS) (unweighted graph)
+  * Dijksta's algorithm (weighted graph, weights must be positive values)
 
 * Topological sorting (directed acyclic graph):
   * Kahn's algorithm
