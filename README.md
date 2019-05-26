@@ -14,8 +14,13 @@ Search :
 * Binary search tree
 
 Graph :
-* Breadth-First Search (BFS)
-  * Algorithm that search the shortest path in unweighted graph
-* Depth-First Search (DFS)
-* Dijksta's algorithm
-  * Algorithm that search the shortest path in weighted graph(weights must be positive values)
+* Traversal algorithms :
+  * Breadth-First Search (BFS)
+  * Depth-First Search (DFS)
+  
+* Shortest-path algorithms :
+ * Breadth-First Search (BFS) (unweighted graph)
+ * Dijksta's algorithm (weighted graph, weights must be positive values)
+
+* Topological sorting (directed acyclic graph):
+  * Kahn's algorithm

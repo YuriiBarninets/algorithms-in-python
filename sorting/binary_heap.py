@@ -1,14 +1,13 @@
+import data_provider
 import sys
 sys.path.append("../utils")
-import data_provider
-
 
 '''
 Binary heap data structure
 Can be used for sorting(HeapSort) - insert all items and then extract them.
 Can be used to implement priority queue.
 
-BST Properties :
+Binary heap properties :
  * All level except the last one must be filled (complete property)
  * A child is always greater/smaller than its parent (heap-order property)
  
@@ -65,7 +64,8 @@ class BinaryHeap:
             if self.item_exists(parent_index) is False:
                 break
 
-            result = self._comparator(self._items[index], self._items[parent_index])
+            result = self._comparator(
+                self._items[index], self._items[parent_index])
             if result is True:
                 self.swap(index, parent_index)
                 index = parent_index
@@ -75,10 +75,11 @@ class BinaryHeap:
     def bubble_down(self, index):
         while True:
             if self.has_children(index) is False:
-                break;
+                break
 
             child_index_to_swap = self.find_child_index_for_bubble_down(index)
-            result = self._comparator(self._items[index], self._items[child_index_to_swap])
+            result = self._comparator(
+                self._items[index], self._items[child_index_to_swap])
             if result is False:
                 self.swap(index, child_index_to_swap)
                 index = child_index_to_swap

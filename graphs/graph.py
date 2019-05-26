@@ -2,6 +2,7 @@ class Vertex:
     def __init__(self, label):
         self.__label = label
         self.__outbound_edges = []
+        self.__inbound_edges = []
 
     def __str__(self):
         outbound_edges_str = ""
@@ -13,11 +14,17 @@ class Vertex:
     def get_outbound_edges(self):
         return self.__outbound_edges
 
+    def get_inbound_edges(self):
+        return self.__inbound_edges
+
     def get_label(self):
         return self.__label
 
-    def add_edge(self, edge):
+    def add_outbound_edge(self, edge):
         self.__outbound_edges.append(edge)
+
+    def add_inbound_edge(self, edge):
+        self.__inbound_edges.append(edge)
 
 
 class Edge:
@@ -58,7 +65,8 @@ class Graph:
     def add_edge(self, start_label, end_label, weight=1):
         edge = Edge(self.__vertices[start_label],
                     self.__vertices[end_label], weight)
-        self.__vertices[start_label].add_edge(edge)
+        self.__vertices[start_label].add_outbound_edge(edge)
+        self.__vertices[end_label].add_inbound_edge(edge)
         self.__edges.append(edge)
 
     def get_vertex(self, label):
@@ -69,6 +77,12 @@ class Graph:
 
     def get_edges(self):
         return self.__edges
+
+    def get_indegree(self, label):
+        return len(self.__vertices[label].get_inbound_edges())
+
+    def get_outdegree(self, label):
+        return len(self.__vertices[label].get_outbound_edges())
 
 
 if __name__ == "__main__":
