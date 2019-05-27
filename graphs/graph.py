@@ -28,13 +28,18 @@ class Vertex:
 
 
 class Edge:
-    def __init__(self, start_vertex, end_vertex, weight=1):
+    def __init__(self, start_vertex, end_vertex, weight=1, directed=True):
         self.__start_vertex = start_vertex
         self.__end_vertex = end_vertex
         self.__weight = weight
+        self.__directed = directed
 
     def __str__(self):
-        return "{0} -{1}-> {2}".format(self.__start_vertex.get_label(), self.__weight, self.__end_vertex.get_label())
+        if self.__directed == True:
+            print_pattern = "{0} -{1}-> {2}"
+        else:
+            print_pattern = "{0} <-{1}-> {2}"
+        return print_pattern.format(self.__start_vertex.get_label(), self.__weight, self.__end_vertex.get_label())
 
     def get_start_vertex(self):
         return self.__start_vertex
@@ -45,11 +50,15 @@ class Edge:
     def get_weight(self):
         return self.__weight
 
+    def __lt__(self, other):
+        return self.get_weight() < other.get_weight()
+
 
 class Graph:
-    def __init__(self):
+    def __init__(self, directed=True):
         self.__vertices = {}
         self.__edges = []
+        self.__directed = directed
 
     def __str__(self):
         graph_str = ""
@@ -64,10 +73,17 @@ class Graph:
 
     def add_edge(self, start_label, end_label, weight=1):
         edge = Edge(self.__vertices[start_label],
-                    self.__vertices[end_label], weight)
+                    self.__vertices[end_label], weight, self.__directed)
         self.__vertices[start_label].add_outbound_edge(edge)
         self.__vertices[end_label].add_inbound_edge(edge)
         self.__edges.append(edge)
+
+        if self.__directed == False:
+            reverse_edge = Edge(
+                self.__vertices[end_label], self.__vertices[start_label], weight, self.__directed)
+            self.__vertices[end_label].add_outbound_edge(reverse_edge)
+            self.__vertices[start_label].add_inbound_edge(reverse_edge)
+            self.__edges.append(reverse_edge)
 
     def get_vertex(self, label):
         return self.__vertices[label]

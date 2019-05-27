@@ -24,3 +24,6 @@ Graph :
 
 * Topological sorting (directed acyclic graph):
   * Kahn's algorithm
+
+* Minimum spanning tree :
+  * Prim's algorithm (undirected weighted graph)
