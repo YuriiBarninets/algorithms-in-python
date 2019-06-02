@@ -6,36 +6,39 @@ import graph_visualizer
 def mst_prim(graph):
     # Prim's algorithm explanation https://www.youtube.com/watch?v=cplfcGZmX7I
     # This algorithm return list of edges, so if we have edges we may recreate MST
-    mst_edges_result = []
-    heap = []
-    visited_vertices = {
-        vertex_label: False for vertex_label in graph.get_vertices()}
+    mst = Graph(False)
+    min_edge_heap = []
+    visited_vertices = set()
 
     # 1. Choose arbitary vertex from which MST algorithm start looking for edges
     arbitary_vertex = next(iter(graph.get_vertices()))
-    visited_vertices[arbitary_vertex] = True
+    visited_vertices.add(arbitary_vertex)
+    mst.add_vertex(arbitary_vertex)
 
-    # 2. Find all adjacent vertices of arbitary vertex and add them to heap
+    # 2. Find all adjacent edges of arbitary vertex and add them to heap
     for edge in graph.get_vertex(arbitary_vertex).get_outbound_edges():
-        heapq.heappush(heap, edge)
+        heapq.heappush(min_edge_heap, edge)
 
-    while len(mst_edges_result) < len(graph.get_vertices()) - 1:
-        # 2. Select an edge with minimum weight (greedy algorithm)
+    while len(mst.get_vertices()) < len(graph.get_vertices()):
+        # 3. Select an edge with minimum weight (greedy algorithm)
         while True:
-            min_edge = heapq.heappop(heap)
-            min_vertex_label = min_edge.get_end_vertex().get_label()
-            if visited_vertices[min_vertex_label] == False:
+            min_edge = heapq.heappop(min_edge_heap)
+            min_vertex = min_edge.get_end_vertex()
+            min_vertex_label = min_vertex.get_label()
+            if min_vertex_label not in visited_vertices:
                 break
 
-        # 3. Add selected edge to MST
-        mst_edges_result.append(min_edge)
-        visited_vertices[min_vertex_label] = True
+        # 4. Mark selected vertex as visited and add selected edge to MST
+        visited_vertices.add(min_vertex_label)
+        mst.add_vertex(min_vertex_label)
+        mst.add_edge(min_edge.get_start_vertex().get_label(),
+                     min_edge.get_end_vertex().get_label(), min_edge.get_weight())
 
-        # 4. Find all adjacent vertices of min vertex and add them to heap
-        for edge in graph.get_vertex(min_vertex_label).get_outbound_edges():
-            heapq.heappush(heap, edge)
+        # 4. Find all adjacent edges of min vertex and add them to heap
+        for edge in min_vertex.get_outbound_edges():
+            heapq.heappush(min_edge_heap, edge)
 
-    return mst_edges_result
+    return mst
 
 
 if __name__ == "__main__":
@@ -63,7 +66,6 @@ if __name__ == "__main__":
 
     graph_visualizer.visualize(graph, "Input graph for Prim's algorithm")
 
-    mst_edges = mst_prim(graph)
+    mst = mst_prim(graph)
 
-    for edge in mst_edges:
-        print(edge)
+    graph_visualizer.visualize(mst, "Minimum spanning tree")
