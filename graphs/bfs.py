@@ -1,31 +1,31 @@
-from graph import *
+from graph import Graph
+from collections import deque
 
 
 def bfs(graph, start_vertex):
     """"
     BFS(Breadth-First Search) use queue to manage incoming vertices
-    DFS(Depth-First Search) use stack to manage incoming vertices
     BFS can be used to find the shortest path in unweighted graph
-    DFS can be used to generate a maze
     """
-    # initially, the queue(BFS)/stack(DFS) contains only the start vertex
+    # initially, the queue contains only the start vertex
     # and all vertices are not visited
-    queue = [start_vertex]
+    queue = deque()
+    queue.append(start_vertex)
     visited_vertices = {}
     for vertex in graph.get_vertices():
         visited_vertices[vertex] = False
 
     result = []
     while len(queue) > 0:
-        # 1. pop a vertex from the queue(BFS)/stack(DFS)
-        current_vertex = queue.pop(0)  # Change on queue.pop() and you get DFS
+        # 1. pop a vertex from the queue
+        current_vertex = queue.popleft()
 
         # 2. ignoring this vertex if it has been visited
         if visited_vertices[current_vertex.get_label()]:
             continue
 
         # 3. mark as visited, so we will not visit it anymore, DO some operation on vertex if necessary
-        result.append(current_vertex)
+        result.append(current_vertex.get_label())
         visited_vertices[current_vertex.get_label()] = True
 
         # 4. get all adjacent vertices which HAVE NOT been visited
