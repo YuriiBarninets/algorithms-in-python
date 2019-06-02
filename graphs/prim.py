@@ -19,7 +19,8 @@ def mst_prim(graph):
     for edge in graph.get_vertex(arbitary_vertex).get_outbound_edges():
         heapq.heappush(min_edge_heap, edge)
 
-    while len(mst.get_vertices()) < len(graph.get_vertices()):
+    input_graph_num_vertices = len(graph.get_vertices())
+    while len(mst.get_vertices()) < input_graph_num_vertices:
         # 3. Select an edge with minimum weight (greedy algorithm)
         while True:
             min_edge = heapq.heappop(min_edge_heap)

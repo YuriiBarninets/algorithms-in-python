@@ -26,4 +26,5 @@ Graph :
   * Kahn's algorithm
 
 * Minimum spanning tree :
-  * Prim's algorithm (undirected weighted graph)
+  * Prim's algorithm (undirected weighted graph, graph must be connected)
+  * Kruskal's algorithm (undirected weighted graph)

@@ -12,9 +12,7 @@ def dfs(graph, start_vertex):
     # and all vertices are not visited
     stack = deque()
     stack.append(start_vertex)
-    visited_vertices = {}
-    for vertex in graph.get_vertices():
-        visited_vertices[vertex] = False
+    visited_vertices = set()
 
     result = []
     while len(stack) > 0:
@@ -22,18 +20,19 @@ def dfs(graph, start_vertex):
         current_vertex = stack.pop()
 
         # 2. ignoring this vertex if it has been visited
-        if visited_vertices[current_vertex.get_label()]:
+        if current_vertex in visited_vertices:
             continue
 
         # 3. mark as visited, so we will not visit it anymore, DO some operation on vertex if necessary
         result.append(current_vertex.get_label())
-        visited_vertices[current_vertex.get_label()] = True
+        visited_vertices.add(current_vertex)
 
         # 4. get all adjacent vertices which HAVE NOT been visited
         adjacent_vertices = []
         for edge in current_vertex.get_outbound_edges():
-            if visited_vertices[edge.get_end_vertex().get_label()] is False:
-                adjacent_vertices.append(edge.get_end_vertex())
+            adjacent_vertex = edge.get_end_vertex()
+            if adjacent_vertex not in visited_vertices:
+                adjacent_vertices.append(adjacent_vertex)
 
         # if necessary we may do some manipulation with adjacent_vertices, e.g. sort them
 

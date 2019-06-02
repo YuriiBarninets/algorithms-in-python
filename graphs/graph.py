@@ -2,7 +2,7 @@ class Vertex:
     def __init__(self, label, directed=True):
         self.__label = label
         self.__directed = directed
-        self.__edges = []
+        self.__edges = set()
 
     def __str__(self):
         outbound_edges_str = ""
@@ -45,7 +45,7 @@ class Vertex:
         return self.__label
 
     def add_edge(self, edge):
-        self.__edges.append(edge)
+        self.__edges.add(edge)
 
     def remove_edge(self, edge):
         if edge in self.__edges:
@@ -94,11 +94,15 @@ class Edge:
 
         return weight_equal == start_vertex_equal == end_vertex_equal == True
 
+    def __hash__(self):
+        return hash(self.__start_vertex.get_label() +
+                    self.__end_vertex.get_label() + str(self.__weight))
+
 
 class Graph:
     def __init__(self, directed=True):
         self.__vertices = {}
-        self.__edges = []
+        self.__edges = set()
         self.__directed = directed
 
     def __str__(self):
@@ -110,7 +114,8 @@ class Graph:
         return graph_str
 
     def add_vertex(self, label):
-        self.__vertices[label] = Vertex(label)
+        if label not in self.__vertices:
+            self.__vertices[label] = Vertex(label, self.__directed)
 
     def add_edge(self, start_label, end_label, weight=1):
         start_vertex = self.__vertices[start_label]
@@ -121,7 +126,7 @@ class Graph:
         if start_vertex != end_vertex:
             end_vertex.add_edge(edge)
 
-        self.__edges.append(edge)
+        self.__edges.add(edge)
 
     def remove_edge(self, start_label, end_label, weight=1):
         start_vertex = self.__vertices[start_label]
@@ -130,24 +135,31 @@ class Graph:
 
         start_vertex.remove_edge(edge)
         end_vertex.remove_edge(edge)
-        self.__edges.remove(edge)
+        if edge in self.__edges:
+            self.__edges.remove(edge)
 
     def remove_vertex(self, vertex_label):
         vertex = self.__vertices[vertex_label]
 
         # remove outbound edges to this vertex for all adjacent vertices
-        # remove outbound edges from graph
-        for edge in vertex.get_inbound_edges():
+        # make copy of edges in order to avoid RuntimeError : Set changed size during iteration
+        inbound_edges_copy = vertex.get_inbound_edges().copy()
+        for edge in inbound_edges_copy:
             adjacent_vertex = edge.get_start_vertex()
             adjacent_vertex.remove_edge(edge)
-            self.__edges.remove(edge)
+
+            if edge in self.__edges:
+                self.__edges.remove(edge)
 
         # remove inbound edges from this vertex to all adjacent vertices
-        # remove inbound edges from graph
-        for edge in vertex.get_outbound_edges():
+        # make copy of edges in order to avoid RuntimeError : Set changed size during iteration
+        outbound_edges_copy = vertex.get_outbound_edges().copy()
+        for edge in outbound_edges_copy:
             adjacent_vertex = edge.get_end_vertex()
             adjacent_vertex.remove_edge(edge)
-            self.__edges.remove(edge)
+
+            if edge in self.__edges:
+                self.__edges.remove(edge)
 
         # remove vertex from graph
         self.__vertices.pop(vertex_label)
@@ -172,7 +184,7 @@ class Graph:
 
 
 if __name__ == "__main__":
-    test_graph = Graph(True)
+    test_graph = Graph()
 
     test_graph.add_vertex("a")
     test_graph.add_vertex("b")
@@ -182,3 +194,5 @@ if __name__ == "__main__":
     test_graph.add_edge("a", "c", 7)
     test_graph.add_edge("c", "b", 1)
     test_graph.add_edge("b", "c", 3)
+
+    print(test_graph)
