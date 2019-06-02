@@ -1,5 +1,6 @@
-from graph import *
+from graph import Graph
 import math
+import graph_visualizer
 
 
 def dijkstra(graph, start_vertex):
@@ -37,10 +38,8 @@ def dijkstra(graph, start_vertex):
 
 
 if __name__ == "__main__":
-    print("Dijkstra algorithm")
-
-    # vertices
     graph = Graph()
+
     graph.add_vertex("a")
     graph.add_vertex("b")
     graph.add_vertex("c")
@@ -48,22 +47,15 @@ if __name__ == "__main__":
     graph.add_vertex("e")
     graph.add_vertex("f")
 
-    # a -2-> b, a -4-> c
     graph.add_edge("a", "b", 2)
     graph.add_edge("a", "c", 4)
-
-    # b -4-> c
     graph.add_edge("b", "c", 1)
-
-    # c -5-> d, c -3-> e
     graph.add_edge("c", "d", 5)
     graph.add_edge("c", "e", 3)
-
-    # d -1-> e
     graph.add_edge("d", "e", 1)
-
-    # e -9-> f
     graph.add_edge("e", "f", 8)
+
+    graph_visualizer.visualize(graph, "Input graph for Dijkstra's algorithm")
 
     shortest_distances_to_vertices = dijkstra(graph, graph.get_vertex("a"))
     print(shortest_distances_to_vertices)

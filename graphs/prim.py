@@ -1,5 +1,6 @@
 from graph import Graph
 import heapq
+import graph_visualizer
 
 
 def mst_prim(graph):
@@ -59,6 +60,8 @@ if __name__ == "__main__":
     graph.add_edge("d", "f", 7)
     graph.add_edge("e", "f", 8)
     graph.add_edge("f", "g", 9)
+
+    graph_visualizer.visualize(graph, "Input graph for Prim's algorithm")
 
     mst_edges = mst_prim(graph)
 

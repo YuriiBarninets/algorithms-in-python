@@ -1,4 +1,5 @@
-from graph import *
+from graph import Graph
+import graph_visualizer
 
 
 def bfs_shortest_path(graph, start_vertex, goal_vertex):
@@ -52,9 +53,8 @@ def bfs_shortest_path(graph, start_vertex, goal_vertex):
 
 
 if __name__ == "__main__":
-
-    # vertices
     graph = Graph()
+
     graph.add_vertex("a")
     graph.add_vertex("b")
     graph.add_vertex("c")
@@ -62,31 +62,26 @@ if __name__ == "__main__":
     graph.add_vertex("e")
     graph.add_vertex("f")
 
-    # a --> b, a --> c, a --> d
     graph.add_edge("a", "b")
     graph.add_edge("a", "c")
     graph.add_edge("a", "d")
-
-    # b --> c, b --> f
     graph.add_edge("b", "c")
     graph.add_edge("b", "f")
-
-    # c --> d
     graph.add_edge("c", "d")
-
-    # d --> e
     graph.add_edge("d", "e")
-
-    # e --> f
     graph.add_edge("e", "f")
 
-    a = graph.get_vertex("a")
-    f = graph.get_vertex("f")
-    shortest_path = bfs_shortest_path(graph, a, f)
+    start_vertex = graph.get_vertex("a")
+    end_vertex = graph.get_vertex("f")
+    shortest_path = bfs_shortest_path(graph, start_vertex, end_vertex)
+
+    graph_visualizer.visualize(
+        graph, "Input graph for BFS shortest path from {0} to {1}".format(start_vertex.get_label(),
+                                                                          end_vertex.get_label()))
 
     if shortest_path:
         for vertex in shortest_path:
             print(vertex)
     else:
         print("There no path between {0} & {1}".format(
-            a.get_label(), f.get_label()))
+            start_vertex.get_label(), end_vertex.get_label()))

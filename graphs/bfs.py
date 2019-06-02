@@ -1,5 +1,6 @@
 from graph import Graph
 from collections import deque
+import graph_visualizer
 
 
 def bfs(graph, start_vertex):
@@ -43,9 +44,8 @@ def bfs(graph, start_vertex):
 
 
 if __name__ == "__main__":
-
-    # vertices
     graph = Graph()
+
     graph.add_vertex("Jhon")
     graph.add_vertex("Sophia")
     graph.add_vertex("Emma")
@@ -54,25 +54,16 @@ if __name__ == "__main__":
     graph.add_vertex("Jeff")
     graph.add_vertex("George")
 
-    # edge Jhon --> Sophia
-    # edge Jhon --> Emma
-    # edge Jhon --> Mark
     graph.add_edge("Jhon", "Sophia")
     graph.add_edge("Jhon", "Emma")
     graph.add_edge("Jhon", "Mark")
-
-    # edge Sophia --> Emma
-    # edge Sophia --> Alice
     graph.add_edge("Sophia", "Emma")
     graph.add_edge("Sophia", "Alice")
-
-    # edge Emma --> Sophia
-    # edge Emma --> Jeff
     graph.add_edge("Emma", "Sophia")
     graph.add_edge("Emma", "Jeff")
-
-    # edge Jeff --> George
     graph.add_edge("Jeff", "George")
+
+    graph_visualizer.visualize(graph, "Input graph for Breadth-First Search")
 
     vertices = bfs(graph, graph.get_vertex("Jhon"))
     for vertex in vertices:

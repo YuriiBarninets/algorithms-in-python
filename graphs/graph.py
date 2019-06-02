@@ -1,44 +1,58 @@
 class Vertex:
-    def __init__(self, label):
+    def __init__(self, label, directed=True):
         self.__label = label
-        self.__outbound_edges = []
-        self.__inbound_edges = []
+        self.__directed = directed
+        self.__edges = []
 
     def __str__(self):
         outbound_edges_str = ""
-        for edge in self.__outbound_edges:
+        for edge in self.get_outbound_edges():
             outbound_edges_str += str(edge) + ", "
 
         inbound_edges_str = ""
-        for edge in self.__inbound_edges:
+        for edge in self.get_inbound_edges():
             inbound_edges_str += str(edge) + ", "
 
         return "Vertex : {0}, Outbound edges : {1}, Inbound edges : {2}".format(self.__label,
                                                                                 outbound_edges_str, inbound_edges_str)
 
     def get_outbound_edges(self):
-        return self.__outbound_edges
+        if self.__directed == False:
+            return self.__edges
+
+        outbound_edges = []
+        for edge in self.__edges:
+            if edge.get_start_vertex() == self:
+                outbound_edges.append(edge)
+
+        return outbound_edges
 
     def get_inbound_edges(self):
-        return self.__inbound_edges
+        if self.__directed == False:
+            return self.__edges
+
+        inbound_edges = []
+        for edge in self.__edges:
+            if edge.get_end_vertex() == self:
+                inbound_edges.append(edge)
+
+        return inbound_edges
+
+    def get_edges(self):
+        return self.__edges
 
     def get_label(self):
         return self.__label
 
     def add_edge(self, edge):
-        if edge.get_start_vertex() == self:
-            self.__outbound_edges.append(edge)
-        elif edge.get_end_vertex() == self:
-            self.__inbound_edges.append(edge)
-        else:
-            raise ValueError("Trying to add an invalid edge : " + str(edge))
+        self.__edges.append(edge)
 
     def remove_edge(self, edge):
-        if edge in self.__outbound_edges:
-            self.__outbound_edges.remove(edge)
-
-        if edge in self.__inbound_edges:
-            self.__inbound_edges.remove(edge)
+        if edge in self.__edges:
+            self.__edges.remove(edge)
+        else:
+            raise ValueError(
+                "Can not find edge {0} in vertex {1}".format(str(edge), str(self)))
 
     def __eq__(self, other):
         return self.__label == other.get_label()
@@ -55,7 +69,7 @@ class Edge:
         self.__directed = directed
 
     def __str__(self):
-        if self.__directed == True:
+        if self.__directed:
             print_pattern = "{0} -{1}-> {2}"
         else:
             print_pattern = "{0} <-{1}-> {2}"
@@ -104,14 +118,10 @@ class Graph:
         edge = Edge(start_vertex, end_vertex, weight, self.__directed)
 
         start_vertex.add_edge(edge)
-        self.__vertices[end_label].add_edge(edge)
-        self.__edges.append(edge)
+        if start_vertex != end_vertex:
+            end_vertex.add_edge(edge)
 
-        if self.__directed == False:
-            back_edge = Edge(end_vertex, start_vertex, weight, self.__directed)
-            start_vertex.add_edge(back_edge)
-            end_vertex.add_edge(back_edge)
-            self.__edges.append(back_edge)
+        self.__edges.append(edge)
 
     def remove_edge(self, start_label, end_label, weight=1):
         start_vertex = self.__vertices[start_label]
@@ -121,12 +131,6 @@ class Graph:
         start_vertex.remove_edge(edge)
         end_vertex.remove_edge(edge)
         self.__edges.remove(edge)
-
-        if self.__directed == False:
-            back_edge = Edge(end_vertex, start_vertex, weight, self.__directed)
-            start_vertex.remove_edge(back_edge)
-            end_vertex.remove_edge(back_edge)
-            self.__edges.remove(back_edge)
 
     def remove_vertex(self, vertex_label):
         vertex = self.__vertices[vertex_label]
@@ -163,20 +167,18 @@ class Graph:
     def get_outdegree(self, label):
         return len(self.__vertices[label].get_outbound_edges())
 
+    def is_directed(self):
+        return self.__directed
+
 
 if __name__ == "__main__":
-    test_graph = Graph()
+    test_graph = Graph(True)
 
-    # vertices
     test_graph.add_vertex("a")
     test_graph.add_vertex("b")
     test_graph.add_vertex("c")
 
-    # edges
     test_graph.add_edge("a", "b", 2)
     test_graph.add_edge("a", "c", 7)
     test_graph.add_edge("c", "b", 1)
     test_graph.add_edge("b", "c", 3)
-    test_graph.add_edge("b", "a", 4)
-
-    print(str(test_graph))
