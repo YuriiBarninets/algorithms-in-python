@@ -1,0 +1,3 @@
+[submodule "packages/graph"]
+	path = packages/graph
+	url = https://github.com/YuriiBarninets/graph.git

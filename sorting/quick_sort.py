@@ -1,6 +1,4 @@
-import sys
-sys.path.append("../utils")
-import data_provider
+from utils import data_provider
 
 """
 O(N) : N * log N

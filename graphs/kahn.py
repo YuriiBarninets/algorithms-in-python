@@ -1,6 +1,5 @@
-from graph import Graph
+from packages.graph import Graph, display_graph
 from queue import Queue
-import graph_visualizer
 
 
 def topological_sorting(graph):
@@ -62,7 +61,7 @@ if __name__ == "__main__":
     dag.add_edge("6", "8")
     dag.add_edge("8", "7")
 
-    graph_visualizer.visualize(dag, "Input graph for Kahn's algorithm")
+    display_graph(dag, "Input graph for Kahn's algorithm")
 
     topological_order = topological_sorting(dag)
     print(topological_order)

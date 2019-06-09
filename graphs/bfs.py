@@ -1,15 +1,13 @@
-from graph import Graph
+from packages.graph import Graph, display_graph
 from collections import deque
-import graph_visualizer
 
 
-def bfs(graph, start_vertex):
+def bfs(start_vertex):
     """"
     BFS(Breadth-First Search) use queue to manage incoming vertices
     BFS can be used to find the shortest path in unweighted graph
     """
-    # initially, the queue contains only the start vertex
-    # and all vertices are not visited
+    # initially, the queue contains only the start vertex and visited_vertices is empty
     queue = deque()
     queue.append(start_vertex)
     visited_vertices = set()
@@ -24,8 +22,8 @@ def bfs(graph, start_vertex):
             continue
 
         # 3. mark as visited, so we will not visit it anymore
-        result.append(current_vertex.get_label())
         visited_vertices.add(current_vertex)
+        result.append(current_vertex.get_label())
 
         # 4. get all adjacent vertices which HAVE NOT been visited
         adjacent_vertices = []
@@ -35,8 +33,7 @@ def bfs(graph, start_vertex):
                 adjacent_vertices.append(adjacent_vertex)
 
         # if necessary we may do some manipulation with adjacent_vertices, e.g. sort them
-
-        # 5. add all adjacent vertices to the queue(BFS)/stack(DFS)
+        # 5. add all adjacent vertices to the queue(BFS)
         queue.extend(adjacent_vertices)
 
     return result
@@ -62,8 +59,8 @@ if __name__ == "__main__":
     graph.add_edge("Emma", "Jeff")
     graph.add_edge("Jeff", "George")
 
-    graph_visualizer.visualize(graph, "Input graph for Breadth-First Search")
+    display_graph(graph, "Input graph for Breadth-First Search")
 
-    vertices = bfs(graph, graph.get_vertex("Jhon"))
+    vertices = bfs(graph.get_vertex("Jhon"))
     for vertex in vertices:
         print(vertex)

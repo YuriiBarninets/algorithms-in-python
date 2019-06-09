@@ -1,15 +1,13 @@
-from graph import Graph
+from packages.graph import Graph, display_graph
 from collections import deque
-import graph_visualizer
 
 
-def dfs(graph, start_vertex):
+def dfs(start_vertex):
     """"
     DFS(Depth-First Search) use stack to manage incoming vertices
     DFS can be used to generate a maze or to find cycles in a graph
     """
-    # initially, the stack contains only the start vertex
-    # and all vertices are not visited
+    # initially, the stack contains only the start vertex and visited_vertices is empty
     stack = deque()
     stack.append(start_vertex)
     visited_vertices = set()
@@ -23,9 +21,9 @@ def dfs(graph, start_vertex):
         if current_vertex in visited_vertices:
             continue
 
-        # 3. mark as visited, so we will not visit it anymore, DO some operation on vertex if necessary
-        result.append(current_vertex.get_label())
+        # 3. mark as visited, so we will not visit it anymore
         visited_vertices.add(current_vertex)
+        result.append(current_vertex.get_label())
 
         # 4. get all adjacent vertices which HAVE NOT been visited
         adjacent_vertices = []
@@ -35,8 +33,7 @@ def dfs(graph, start_vertex):
                 adjacent_vertices.append(adjacent_vertex)
 
         # if necessary we may do some manipulation with adjacent_vertices, e.g. sort them
-
-        # 5. add all adjacent vertices to the queue(BFS)/stack(DFS)
+        # 5. add all adjacent vertices to the stack(DFS)
         stack.extend(adjacent_vertices)
 
     return result
@@ -62,8 +59,8 @@ if __name__ == "__main__":
     graph.add_edge("Emma", "Jeff")
     graph.add_edge("Jeff", "George")
 
-    graph_visualizer.visualize(graph, "Input graph for Depth-First Search")
+    display_graph(graph, "Input graph for Depth-First Search")
 
-    vertices = dfs(graph, graph.get_vertex("Jhon"))
+    vertices = dfs(graph.get_vertex("Jhon"))
     for vertex in vertices:
         print(vertex)

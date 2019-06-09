@@ -1,8 +1,7 @@
-from graph import Graph
-import graph_visualizer
+from packages.graph import Graph, display_graph
 
 
-def bfs_shortest_path(graph, start_vertex, goal_vertex):
+def bfs_shortest_path(start_vertex, goal_vertex):
     """
     When we use BFS to find a shortest path we have to track path from source to goal.
     1. We may store parent vertex for each child, so this let us to get a path from goal to start
@@ -16,9 +15,7 @@ def bfs_shortest_path(graph, start_vertex, goal_vertex):
     # initially, queue contains only the list with start vertex
     # and all vertices are not visited
     queue = [[start_vertex]]
-    visited_vertices = {}
-    for vertex in graph.get_vertices():
-        visited_vertices[vertex] = False
+    visited_vertices = set()
 
     while len(queue) > 0:
         # pop a vertex from the queue
@@ -26,7 +23,7 @@ def bfs_shortest_path(graph, start_vertex, goal_vertex):
         current_vertex = path_to_vertex[-1]
 
         # ignoring this vertex if it has been visited
-        if visited_vertices[current_vertex.get_label()] is True:
+        if current_vertex in visited_vertices:
             continue
 
         # return path to vertex if we find goal vertex
@@ -34,12 +31,12 @@ def bfs_shortest_path(graph, start_vertex, goal_vertex):
             return path_to_vertex
 
         # mark as visited, so we will not visit it anymore
-        visited_vertices[current_vertex.get_label()] = True
+        visited_vertices.add(current_vertex)
 
         # get all adjacent vertices which HAVE NOT been visited
         adjacent_vertices = []
         for edge in current_vertex.get_outbound_edges():
-            if visited_vertices[edge.get_end_vertex().get_label()] is False:
+            if edge.get_end_vertex() not in visited_vertices:
                 adjacent_vertices.append(edge.get_end_vertex())
 
         # push a list with path to each adjacent vertex in our queue
@@ -73,9 +70,9 @@ if __name__ == "__main__":
 
     start_vertex = graph.get_vertex("a")
     end_vertex = graph.get_vertex("f")
-    shortest_path = bfs_shortest_path(graph, start_vertex, end_vertex)
+    shortest_path = bfs_shortest_path(start_vertex, end_vertex)
 
-    graph_visualizer.visualize(
+    display_graph(
         graph, "Input graph for BFS shortest path from {0} to {1}".format(start_vertex.get_label(),
                                                                           end_vertex.get_label()))
 

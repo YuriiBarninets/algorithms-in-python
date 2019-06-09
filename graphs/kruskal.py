@@ -1,7 +1,6 @@
-from graph import Graph
+from packages.graph import Graph, display_graph
 from collections import deque
 import heapq
-import graph_visualizer
 
 
 def has_cycle(graph):
@@ -98,8 +97,8 @@ if __name__ == "__main__":
     graph.add_edge("e", "f", 8)
     graph.add_edge("f", "g", 9)
 
-    graph_visualizer.visualize(graph, "Input graph for Kruskal's algorithm")
+    display_graph(graph, "Input graph for Kruskal's algorithm")
 
     mst = mst_kruskal(graph)
 
-    graph_visualizer.visualize(mst, "Minimum spanning tree")
+    display_graph(mst, "Minimum spanning tree")

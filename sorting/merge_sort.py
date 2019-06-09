@@ -1,6 +1,4 @@
-import sys
-sys.path.append("../utils")
-import data_provider
+from utils import data_provider
 
 
 """
@@ -34,9 +32,9 @@ def merge(arr, left, middle, right):
         right_arr[j] = arr[middle + 1 + j]
 
     # merge the temp arrays back into arr[left..right]
-    i = 0 # index of first subarray
-    j = 0 # index of second subarray
-    k = left # index of merged subarray
+    i = 0  # index of first subarray
+    j = 0  # index of second subarray
+    k = left  # index of merged subarray
 
     # merge operation
     while i < num1 and j < num2:

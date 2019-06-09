@@ -1,6 +1,4 @@
-import data_provider
-import sys
-sys.path.append("../utils")
+from utils import data_provider
 
 '''
 Binary heap data structure

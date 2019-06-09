@@ -1,6 +1,4 @@
-import sys
-sys.path.append("../utils")
-import data_provider
+from utils import data_provider
 
 
 def selection_sort(array):
@@ -46,7 +44,8 @@ def insertion_sort(array):
         index_to_insert = i
 
         while index_to_insert > 0 and array[index_to_insert - 1] > array[index_to_insert]:
-            array[index_to_insert - 1], array[index_to_insert] = array[index_to_insert], array[index_to_insert - 1]
+            array[index_to_insert -
+                  1], array[index_to_insert] = array[index_to_insert], array[index_to_insert - 1]
             index_to_insert -= 1
 
     return array
@@ -81,16 +80,19 @@ def bubble_sort(array):
 
 if __name__ == "__main__":
     print("Selection sort : ")
-    ordered_array = selection_sort(data_provider.generate_random_array(0, 150, 25))
+    ordered_array = selection_sort(
+        data_provider.generate_random_array(0, 150, 25))
     for value in ordered_array:
         print(value, end=" ")
 
     print("\nInsertion sort : ")
-    ordered_array = insertion_sort(data_provider.generate_random_array(0, 150, 25))
+    ordered_array = insertion_sort(
+        data_provider.generate_random_array(0, 150, 25))
     for value in ordered_array:
         print(value, end=" ")
 
     print("\nBubble sort : ")
-    ordered_array = bubble_sort(data_provider.generate_random_array(0, 150, 25))
+    ordered_array = bubble_sort(
+        data_provider.generate_random_array(0, 150, 25))
     for value in ordered_array:
         print(value, end=" ")
